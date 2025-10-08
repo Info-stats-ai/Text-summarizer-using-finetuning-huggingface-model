@@ -1,0 +1,36 @@
+# Core ML and NLP Libraries
+transformers  # Hugging Face library for state-of-the-art NLP models (BERT, GPT, T5, etc.)
+transformers[sentencepiece]  # Transformers with SentencePiece tokenizer support
+sentencepiece  # Unsupervised text tokenizer for neural text processing
+torch  # PyTorch deep learning framework for training and inference
+
+# Dataset and Data Processing
+datasets  # Hugging Face datasets library for loading and processing NLP datasets
+pandas  # Data manipulation and analysis library with DataFrame support
+nltk  # Natural Language Toolkit for text processing and linguistics
+
+# Evaluation Metrics
+sacrebleu  # Standard BLEU score implementation for machine translation evaluation
+rouge_score  # ROUGE metrics for evaluating text summarization quality
+
+# Utility Libraries
+py7zr  # Pure Python 7-zip file archive handler
+tqdm  # Progress bar library for loops and long-running operations
+pyYAML  # YAML parser and emitter for configuration files
+python-box  # Advanced dictionary with dot notation access
+ensure  # Validation and assertion library for runtime checks
+
+# Visualization
+matplotlib  # Plotting and visualization library for creating graphs and charts
+
+# Web Framework and API
+fastapi  # Modern, fast web framework for building APIs with Python
+uvicorn  # Lightning-fast ASGI server for running FastAPI applications
+Jinja2  # Template engine for rendering HTML and other text formats
+
+# AWS Integration
+boto3  # Amazon Web Services (AWS) SDK for Python
+mypy-boto3-s3  # Type hints for boto3 S3 service for better IDE support
+
+# Development Tools
+notebook  # Jupyter Notebook for interactive Python development and experimentation
