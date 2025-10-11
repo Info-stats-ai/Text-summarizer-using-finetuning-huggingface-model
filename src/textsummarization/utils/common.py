@@ -58,3 +58,18 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
         # - PermissionError: no read permission
         # - yaml.YAMLError: invalid YAML syntax
         raise e
+
+
+@ensure_annotations
+def create_directories(path_to_directories: list, verbose=True):
+    """
+    Creates a list of directories
+    
+    Args:
+        path_to_directories (list): List of directory paths to create
+        verbose (bool): If True, logs directory creation. Default is True.
+    """
+    for path in path_to_directories:
+        os.makedirs(path, exist_ok=True)
+        if verbose:
+            logger.info(f"created directory at: {path}")

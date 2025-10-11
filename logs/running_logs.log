@@ -1,3 +1,77 @@
 [2025-10-08 01:13:26,288: INFO: <string>: Logger is working!]
 [2025-10-08 01:39:06,389: INFO: main: Logging is implemented]
 [2025-10-08 01:40:30,139: INFO: main: Logging is implemented]
+[2025-10-10 03:13:57,120: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-10 03:15:27,553: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-10 03:16:36,486: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-10 03:18:05,510: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-10 03:18:12,645: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-10 03:18:18,551: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-10 03:20:38,984: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-10 03:22:40,471: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-11 03:03:35,467: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-11 03:03:35,469: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-11 03:03:35,469: INFO: common: created directory at: artifacts]
+[2025-10-11 03:03:35,470: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-10-11 03:03:46,770: INFO: 2646156672: Downloaded file summarizer-data.zip with the following headers: Connection: close
+Content-Length: 7903594
+Cache-Control: max-age=300
+Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+Content-Type: application/zip
+ETag: "dbc016a060da18070593b83afff580c9b300f0b6ea4147a7988433e04df246ca"
+Strict-Transport-Security: max-age=31536000
+X-Content-Type-Options: nosniff
+X-Frame-Options: deny
+X-XSS-Protection: 1; mode=block
+X-GitHub-Request-Id: D3E6:336D7D:15ED6B:1DF301:68EA0146
+Accept-Ranges: bytes
+Date: Sat, 11 Oct 2025 07:03:36 GMT
+Via: 1.1 varnish
+X-Served-By: cache-iad-kjyo7100165-IAD
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1760166216.123044,VS0,VE87
+Vary: Authorization,Accept-Encoding
+Access-Control-Allow-Origin: *
+Cross-Origin-Resource-Policy: cross-origin
+X-Fastly-Request-ID: 2589393d671e8ba5bb1f6930a83f82bb55217785
+Expires: Sat, 11 Oct 2025 07:08:36 GMT
+Source-Age: 0
+
+]
+[2025-10-11 03:03:46,833: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-11 03:03:46,834: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-11 03:03:46,835: INFO: common: created directory at: artifacts]
+[2025-10-11 03:10:52,606: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-11 03:10:52,608: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-11 03:10:52,608: INFO: common: created directory at: artifacts]
+[2025-10-11 03:10:52,608: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-10-11 03:11:07,556: INFO: 2646156672: Downloaded file artifacts/data_ingestion/summarizer-data.zip with the following headers: Connection: close
+Content-Length: 7903594
+Cache-Control: max-age=300
+Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+Content-Type: application/zip
+ETag: "dbc016a060da18070593b83afff580c9b300f0b6ea4147a7988433e04df246ca"
+Strict-Transport-Security: max-age=31536000
+X-Content-Type-Options: nosniff
+X-Frame-Options: deny
+X-XSS-Protection: 1; mode=block
+X-GitHub-Request-Id: D3E6:336D7D:15ED6B:1DF301:68EA0146
+Accept-Ranges: bytes
+Date: Sat, 11 Oct 2025 07:10:59 GMT
+Via: 1.1 varnish
+X-Served-By: cache-iad-kjyo7100156-IAD
+X-Cache: HIT
+X-Cache-Hits: 0
+X-Timer: S1760166660.920059,VS0,VE35
+Vary: Authorization,Accept-Encoding
+Access-Control-Allow-Origin: *
+Cross-Origin-Resource-Policy: cross-origin
+X-Fastly-Request-ID: a6e076f3e10e29e37f8eaca433f1a3be6aab4d54
+Expires: Sat, 11 Oct 2025 07:15:59 GMT
+Source-Age: 0
+
+]
+[2025-10-11 03:11:07,626: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-11 03:11:07,628: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-11 03:11:07,628: INFO: common: created directory at: artifacts]
