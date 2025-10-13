@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+
 # input to data ingestion using .yaml file
 @dataclass
 class DataIngestionConfig:
@@ -7,3 +8,10 @@ class DataIngestionConfig:
     source_URL: Path
     local_data_file: Path
     unzip_dir: Path
+
+
+@dataclass
+class DataTransformationConfig:
+    root_dir: Path
+    data_path: Path
+    tokenizer_name: str
