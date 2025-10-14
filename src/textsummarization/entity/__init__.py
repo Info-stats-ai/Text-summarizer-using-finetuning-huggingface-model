@@ -15,3 +15,17 @@ class DataTransformationConfig:
     root_dir: Path
     data_path: Path
     tokenizer_name: str
+
+@dataclass
+class ModelTrainerConfig:
+    root_dir: Path
+    data_path: Path
+    model_ckpt: str
+    num_train_epochs: int
+    warmup_steps: int
+    weight_decay: float
+    logging_steps: int
+    eval_strategy: str
+    eval_steps: int
+    save_steps: float
+    gradient_accumulation_steps: int

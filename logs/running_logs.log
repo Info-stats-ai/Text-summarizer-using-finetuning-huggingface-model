@@ -154,3 +154,45 @@ Source-Age: 0
 [2025-10-13 03:07:11,504: INFO: common: created directory at: artifacts]
 [2025-10-13 03:07:11,505: INFO: common: created directory at: artifacts/model_trainer]
 [2025-10-13 03:07:11,505: INFO: common: created directory at: artifacts/model_trainer]
+[2025-10-14 13:28:57,921: INFO: main: >>>>>> stage Data Ingestion Stage started <<<<<<]
+[2025-10-14 13:28:57,923: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-14 13:28:57,925: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-14 13:28:57,925: INFO: common: created directory at: artifacts]
+[2025-10-14 13:28:57,925: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-10-14 13:28:57,925: INFO: data_ingestion: File already exists of size]
+[2025-10-14 13:28:57,984: INFO: main: >>>>>> stage Data Ingestion Stage completed <<<<<<]
+[2025-10-14 13:28:57,984: INFO: main: >>>>>> stage Data Transformation Stage started <<<<<<]
+[2025-10-14 13:28:57,985: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-14 13:28:57,985: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-14 13:28:57,986: INFO: common: created directory at: artifacts]
+[2025-10-14 13:28:57,986: INFO: common: created directory at: artifacts/data_transformation]
+[2025-10-14 13:28:58,740: INFO: main: >>>>>> stage Data Transformation Stage completed <<<<<<]
+[2025-10-14 13:28:58,740: INFO: main: >>>>>> stage Model Trainer Stage started <<<<<<]
+[2025-10-14 13:28:58,741: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-14 13:28:58,742: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-14 13:28:58,742: INFO: common: created directory at: artifacts]
+[2025-10-14 13:28:58,742: INFO: common: created directory at: artifacts/model_trainer]
+[2025-10-14 13:28:58,742: INFO: common: created directory at: artifacts/model_trainer]
+[2025-10-14 13:28:58,744: ERROR: main: not a string]
+Traceback (most recent call last):
+  File "/Users/omkarthakur/Desktop/Text-Summary/main.py", line 30, in <module>
+    obj.main()
+  File "/Users/omkarthakur/Desktop/Text-Summary/src/textsummarization/pipeline/stage_03_data_trainer_pipeline.py", line 12, in main
+    model_trainer.train()
+  File "/Users/omkarthakur/Desktop/Text-Summary/src/textsummarization/components/Model_trainer.py", line 15, in train
+    tokenizer = AutoTokenizer.from_pretrained(self.config.model_ckpt)
+  File "/Users/omkarthakur/Desktop/Text-Summary/venv/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1159, in from_pretrained
+    return tokenizer_class_fast.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/Users/omkarthakur/Desktop/Text-Summary/venv/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2097, in from_pretrained
+    return cls._from_pretrained(
+  File "/Users/omkarthakur/Desktop/Text-Summary/venv/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2135, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/Users/omkarthakur/Desktop/Text-Summary/venv/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2343, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/Users/omkarthakur/Desktop/Text-Summary/venv/lib/python3.10/site-packages/transformers/models/pegasus/tokenization_pegasus.py", line 144, in __init__
+    self.sp_model.Load(vocab_file)
+  File "/Users/omkarthakur/Desktop/Text-Summary/venv/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/Users/omkarthakur/Desktop/Text-Summary/venv/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string

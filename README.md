@@ -1,7 +1,8 @@
 # Text- Summarizer Using Huggingface
 
 ### Workflows
-0. Constants file to import libraries to the config
+0. Constants file to import libraries to the config and update the entity
+
 1. Config.yaml
 2. Params.yaml
 3. Config entity
