@@ -149,3 +149,8 @@ Source-Age: 0
 [2025-10-13 02:19:26,744: INFO: common: created directory at: artifacts]
 [2025-10-13 02:19:26,745: INFO: common: created directory at: artifacts/data_transformation]
 [2025-10-13 02:19:28,953: INFO: main: >>>>>> stage Data Transformation Stage completed <<<<<<]
+[2025-10-13 03:07:11,497: INFO: common: yaml file: config/config.yaml loaded successfully]
+[2025-10-13 03:07:11,502: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-10-13 03:07:11,504: INFO: common: created directory at: artifacts]
+[2025-10-13 03:07:11,505: INFO: common: created directory at: artifacts/model_trainer]
+[2025-10-13 03:07:11,505: INFO: common: created directory at: artifacts/model_trainer]
