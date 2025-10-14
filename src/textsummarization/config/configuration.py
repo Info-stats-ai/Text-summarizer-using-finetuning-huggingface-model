@@ -2,6 +2,7 @@ from src.textsummarization.constants import *
 from src.textsummarization.utils.common import read_yaml, create_directories
 from src.textsummarization.entity import DataIngestionConfig, DataTransformationConfig
 from src.textsummarization.entity import ModelTrainerConfig
+from src.textsummarization.entity import ModelEvaluationConfig
 class ConfigurationManager:
     def __init__(
         self,
@@ -57,3 +58,13 @@ class ConfigurationManager:
         )
         return model_trainer_config
 
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+        create_directories([config.root_dir])
+        return ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            model_path=config.model_path,
+            tokenizer_path=config.tokenizer_path,
+            metric_file_name=config.metric_file_name
+        )
