@@ -17,15 +17,15 @@ class TextInput(BaseModel):
 
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/", tags=["authentication"])
+@application.get("/", tags=["authentication"])
 async def index():
     return templates.TemplateResponse("index.html", {"request": {}})
 
-@app.get("/docs", tags=["authentication"])
+@application.get("/docs", tags=["authentication"])
 async def docs():
     return RedirectResponse(url="/docs")
 
-@app.get("/train")
+@application.get("/train")
 async def train():
     try:
         os.system("python main.py")
@@ -33,7 +33,7 @@ async def train():
     except Exception as e:
         return Response(f"Error: {e}")
     
-@app.post("/predict")
+@application.post("/predict")
 async def predict_route(text: str):
     try:
         logger.info(f"Received prediction request for text: {text[:100]}...")
@@ -46,4 +46,4 @@ async def predict_route(text: str):
         return f"Error: Failed to generate summary. {str(e)}"
     
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    uvicorn.run(application, host="0.0.0.0", port=8080)
