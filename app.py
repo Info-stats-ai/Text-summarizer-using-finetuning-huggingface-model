@@ -10,7 +10,7 @@ from src.textsummarization.pipeline.prediction_pipeline import PredictionPipelin
 from src.textsummarization.logging import logger
 
 text:str = "What is the Text Summarization?"
-application = FastAPI()
+app = FastAPI()
 
 class TextInput(BaseModel):
     text: str
