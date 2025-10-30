@@ -15,7 +15,10 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . /app
 
+RUN mkdir -p /app/logs /app/artifacts
 EXPOSE 8080
+
+
 
 CMD ["uvicorn", "application:application", "--host", "0.0.0.0", "--port", "8080", "--workers", "1"]
 
