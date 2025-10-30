@@ -1,0 +1,70 @@
+name: CI-CD to ECR and EC2
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  ECR_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build image
+        run: |
+          docker build -t $ECR_URI:latest -t $ECR_URI:${GITHUB_SHA} .
+
+      - name: Push image
+        run: |
+          docker push $ECR_URI:latest
+          docker push $ECR_URI:${GITHUB_SHA}
+
+  deploy-ec2:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ssh client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy on EC2
+        env:
+          HOST: ${{ secrets.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
+          REGION: ${{ secrets.AWS_REGION }}
+          ECR_URI: ${{ env.ECR_URI }}
+        run: |
+          ssh -o StrictHostKeyChecking=no ${USER}@${HOST} << 'EOF'
+          set -e
+          echo "Logging in to ECR"
+          aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_URI%/*}
+          echo "Pulling image"
+          docker pull ${ECR_URI}:${GITHUB_SHA}
+          echo "Stopping old container if exists"
+          docker rm -f text-sum || true
+          echo "Starting new container"
+          docker run -d --name text-sum -p 80:8080 ${ECR_URI}:${GITHUB_SHA}
+          docker ps
+          EOF

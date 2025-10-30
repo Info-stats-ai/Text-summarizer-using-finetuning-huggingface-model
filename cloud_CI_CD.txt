@@ -1,0 +1,78 @@
+Here’s a crisp, battle-tested plan for Dockerizing, storing private images in AWS ECR, and deploying to an EC2 instance via a GitHub Actions CI/CD workflow. We’ll use application.py as the runtime entrypoint.
+
+### What we’re doing and why
+- Containerize with Docker: Standardize runtime; no “works on my machine” issues.
+- Private images in ECR: Secure, AWS-native registry with IAM control; ideal for private workloads vs. Docker Hub.
+- Deploy to EC2 using the same image: Identical behavior across dev/stage/prod; fast rollbacks (pull previous tag).
+- GitHub Actions CI/CD: Fully automated build, test, push, and deploy on every push to main (or tagged releases).
+
+### High-level architecture
+- Dev machine/CI builds Docker image from repo using application.py entrypoint.
+- Image is pushed to ECR with tags latest and GITHUB_SHA.
+- EC2 pulls the exact image (by SHA) and runs it using Docker.
+- App listens on port 8080 (container) mapped to 80/8080 on EC2 (security group must allow inbound).
+
+### What we’ll create/change
+- Dockerfile: Production-friendly, Python 3.10-slim, installs requirements, copies code, runs uvicorn with application:application.
+- .dockerignore: Exclude venv, notebooks, cache, large local artifacts to slim down images.
+- Sync application.py with app.py: same routes and behavior; use application:application as server target.
+- .github/workflows/main.yaml: CI (lint optional), build, tag, push to ECR; CD step SSH/SSM into EC2 to pull and restart container.
+
+### CI pipeline (GitHub Actions)
+- Triggers: push to main and/or release tags.
+- Steps:
+  1) Checkout repo
+  2) Configure AWS credentials (OIDC or access keys)
+  3) Login to ECR
+  4) Build Docker image: tag as $ECR_URI:latest and $ECR_URI:$GITHUB_SHA
+  5) Push both tags
+- Why: deterministic image per commit, latest for convenience.
+
+### CD pipeline (GitHub Actions)
+- Strategy: Simple SSH to EC2 (or AWS SSM if preferred). On deploy:
+  1) SSH to EC2
+  2) docker login to ECR
+  3) docker pull $ECR_URI:$GITHUB_SHA
+  4) docker stop/rm existing container (ignore errors if not running)
+  5) docker run -d -p 80:8080 --name text-sum $ECR_URI:$GITHUB_SHA
+- Why: zero-downtime-ish with a quick restart; easy rollback by pulling previous SHA.
+
+### AWS prerequisites
+- ECR: private repo, e.g., text-summarization.
+- EC2: Docker installed; security group allows inbound 80 (or 8080), and your GitHub runner can SSH/SSM.
+- IAM:
+  - GitHub Actions needs ECR push permissions (via OIDC or access keys).
+  - EC2 instance role needs ECR pull permissions (if using `aws ecr get-login-password`) or you pass login via GitHub over SSH.
+
+### GitHub secrets you’ll need
+- AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY (if not using OIDC)
+- AWS_REGION
+- ECR_REPOSITORY (e.g., text-summarization)
+- ACCOUNT_ID (or compute in workflow)
+- EC2_HOST (public DNS/IP)
+- EC2_USER (e.g., ubuntu or ec2-user)
+- EC2_SSH_KEY (as an Actions secret or use ssh-agent + repository secret)
+
+### Ports and process
+- App runs uvicorn application:application on 0.0.0.0:8080 inside container.
+- Map EC2 port 80 → container 8080.
+- Nginx on EC2 must be stopped or use a different host port if nginx is needed.
+
+### Observability and logs
+- Container logs: docker logs -f text-sum on EC2.
+- App logs still go to logs/running_logs.log inside the container; consider mounting a volume or using CloudWatch later.
+
+### Rollback
+- On EC2: docker pull $ECR_URI:<previous_sha> && docker run with that tag.
+- In GitHub: redeploy earlier runs via workflow “Re-run with previous SHA”.
+
+### Cost note
+- ECR storage (GB-month) + EC2 compute hours + data transfer. Keep images slim (.dockerignore, don’t COPY large artifacts unless needed).
+
+If you’re good with this plan, I’ll:
+- Create Dockerfile and .dockerignore
+- Ensure application.py matches app.py and set uvicorn entrypoint
+- Add .github/workflows/main.yaml with CI (build/push) and CD (SSH deploy to EC2)
+- Provide the list of secrets to set and exact commands to create the ECR repo if it doesn’t exist
+
+Say “go” and I’ll generate the files.
