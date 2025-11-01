@@ -54,7 +54,7 @@ jobs:
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USER }}
           REGION: ${{ secrets.AWS_REGION }}
-          ECR_URI: ${{ env.ECR_URI }}
+          ECR_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}
         run: |
           ssh -o StrictHostKeyChecking=no ${USER}@${HOST} << 'EOF'
           set -e
