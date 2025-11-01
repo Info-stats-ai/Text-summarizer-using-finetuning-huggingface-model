@@ -33,21 +33,20 @@ jobs:
           aws ecr describe-repositories --region ${{ secrets.AWS_REGION }} || echo "ECR describe failed"
 
       - name: Login to Amazon ECR
-        run: |
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build image
+      - name: Build, tag and push image
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo "Building Docker image..."
-          echo "ECR_URI: $ECR_URI"
-          docker build -t $ECR_URI:latest -t $ECR_URI:${GITHUB_SHA} .
-
-      - name: Push image
-        run: |
-          echo "Pushing Docker image..."
-          echo "ECR_URI: $ECR_URI"
-          docker push $ECR_URI:latest
-          docker push $ECR_URI:${GITHUB_SHA}
+          echo "Registry: $REGISTRY"
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
+          docker push $REGISTRY/$REPOSITORY:latest
 
   deploy-ec2:
     needs: build-and-push
