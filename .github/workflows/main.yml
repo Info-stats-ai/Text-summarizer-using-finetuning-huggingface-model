@@ -25,6 +25,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Debug AWS setup
+        run: |
+          echo "AWS CLI version:"
+          aws --version
+          echo "Testing ECR access..."
+          aws ecr describe-repositories --region ${{ secrets.AWS_REGION }} || echo "ECR describe failed"
+
       - name: Login to Amazon ECR
         run: |
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
